@@ -1,0 +1,1 @@
+import"../chunks/DsnmJJEf.js";import"../chunks/pIwi9DJK.js";import{u as e,a as t,$ as l}from"../chunks/CyDpcMOC.js";import{h as m}from"../chunks/So-qPimr.js";var n=e('<main class="svelte-1uha8ag"><h1 class="svelte-1uha8ag">Flagged Down</h1></main>');function h(a){console.log("Hello, World!");var o=n();m(r=>{l.title="Flagged Down"}),t(a,o)}export{h as component};

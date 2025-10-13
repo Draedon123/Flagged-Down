@@ -1,5 +1,34 @@
 <script lang="ts">
-  console.log("Hello, World!");
+  import Semaphore, { type Letter } from "$lib/components/Semaphore.svelte";
+
+  const LETTERS: Letter[] = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ];
 </script>
 
 <svelte:head>
@@ -8,6 +37,10 @@
 
 <main>
   <h1>Flagged Down</h1>
+
+  {#each LETTERS as letter (letter)}
+    <Semaphore flag={letter} />
+  {/each}
 </main>
 
 <style lang="scss">

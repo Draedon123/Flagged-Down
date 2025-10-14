@@ -18,8 +18,8 @@
     onkeyup={(event) => {
       const value = event.currentTarget.value as Letter;
 
-      if (/^[A-Z]$/.test(value)) {
-        flag = value;
+      if (/^[A-Za-z]$/.test(value)) {
+        flag = value.toUpperCase() as Letter;
       }
     }}
   />

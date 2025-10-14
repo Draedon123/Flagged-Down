@@ -1,5 +1,9 @@
 <script lang="ts">
   import Guide from "$lib/components/Guide.svelte";
+  import type { Letter } from "$lib/components/Semaphore.svelte";
+  import Semaphore from "$lib/components/Semaphore.svelte";
+
+  let flag: Letter = $state("A");
 </script>
 
 <svelte:head>
@@ -9,6 +13,19 @@
 <main>
   <h1>Flagged Down</h1>
 
+  <input
+    maxlength="1"
+    onkeyup={(event) => {
+      const value = event.currentTarget.value as Letter;
+
+      if (/^[A-Z]$/.test(value)) {
+        flag = value;
+      }
+    }}
+  />
+  <div class="flag">
+    <Semaphore {flag} />
+  </div>
   <Guide />
 </main>
 

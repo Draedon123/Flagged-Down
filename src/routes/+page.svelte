@@ -1,30 +1,54 @@
 <script lang="ts">
   import Guide from "$lib/components/Guide.svelte";
-  import type { Letter } from "$lib/components/Semaphore.svelte";
   import Semaphore from "$lib/components/Semaphore.svelte";
 
-  let flag: Letter = $state("A");
+  let orientations: [number, number] = $state([0, 0]);
+
+  let selected: 0 | 1 = 0;
+  function onKeyDown(event: KeyboardEvent): void {
+    if (event.code.startsWith("Arrow")) {
+      event.preventDefault();
+    }
+
+    switch (event.code) {
+      case "ArrowUp": {
+        orientations[selected]++;
+        break;
+      }
+      case "ArrowDown": {
+        orientations[selected]--;
+        break;
+      }
+      case "ArrowLeft": {
+        selected = 0;
+        break;
+      }
+      case "ArrowRight": {
+        selected = 1;
+        break;
+      }
+    }
+  }
 </script>
 
 <svelte:head>
   <title>Flagged Down</title>
 </svelte:head>
 
+<svelte:document onkeydown={onKeyDown} />
+
 <main>
   <h1>Flagged Down</h1>
 
-  <input
-    maxlength="1"
-    onkeyup={(event) => {
-      const value = event.currentTarget.value as Letter;
-
-      if (/^[A-Za-z]$/.test(value)) {
-        flag = value.toUpperCase() as Letter;
-      }
-    }}
-  />
-  <div class="flag">
-    <Semaphore {flag} />
+  <div class="centre">
+    <p>Use Left and Right arrows to select the arm</p>
+    <p>
+      Use the Up and Down arrows to rotate Clockwise and Anti-Clockwise
+      respectively
+    </p>
+    <div class="flag">
+      <Semaphore flag={orientations} />
+    </div>
   </div>
   <Guide />
 </main>
@@ -45,9 +69,25 @@
 
   main {
     padding: 8px;
+
+    width: 100vw;
+    height: 100vh;
   }
 
   h1 {
     text-align: center;
+  }
+
+  .centre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  .flag {
+    width: 50vw;
   }
 </style>

@@ -28,7 +28,7 @@
     | "Z";
 
   // [LEFT POSITION, RIGHT POSITION]
-  // positions measured clockwise from up in 45 degree increments, from 0-7
+  // positions measured clockwise from up in 45 degree increments
   const FLAGS: Readonly<Record<Letter, Readonly<[number, number]>>> = {
     A: [5, 4],
     B: [6, 4],
@@ -63,27 +63,22 @@
 
 <script lang="ts">
   type Props = {
-    flag: Letter;
+    flag: Letter | [number, number];
   };
 
   let { flag }: Props = $props();
-  let orientations = $derived(FLAGS[flag] ?? FLAGS.A);
+  let orientations = $derived(typeof flag === "string" ? FLAGS[flag] : flag);
 
-  let flipLeft = $derived(orientations[0] < 4 && orientations[0] !== 0);
-  let flipRight = $derived(orientations[1] > 4);
-  // the flipped arms are already rotated 45 deg
-  let leftAngle = $derived(
-    !flipLeft ? orientations[0] * 45 : (orientations[0] - 1) * 45
-  );
-  let rightAngle = $derived(
-    !flipRight ? orientations[1] * 45 : (orientations[1] + 1) * 45
-  );
+  let flipLeft = $derived(orientations[0] % 8 < 4 && orientations[0] % 8 !== 0);
+  let flipRight = $derived(orientations[1] % 8 > 4);
+  let leftAngle = $derived(orientations[0] * 45);
+  let rightAngle = $derived(orientations[1] * 45);
 </script>
 
 <svg
   xmlns="http://www.w3.org/2000/svg"
   version="1.0"
-  viewBox="0 0 600 500"
+  viewBox="-20 -20 640 540"
   xmlns:xlink="http://www.w3.org/1999/xlink"
 >
   <circle cx="300" cy="210" r="25" />
@@ -108,7 +103,7 @@
   </g>
 
   <!-- left, flipped -->
-  <g transform="rotate({leftAngle} 280 250)" class:hidden={!flipLeft}>
+  <g transform="rotate({leftAngle - 45} 280 250)" class:hidden={!flipLeft}>
     <rect
       transform="rotate(-45)"
       width="70"
@@ -129,7 +124,7 @@
   </g>
 
   <!-- right, flipped -->
-  <g transform="rotate({rightAngle} 320 250)" class:hidden={!flipRight}>
+  <g transform="rotate({rightAngle + 45} 320 250)" class:hidden={!flipRight}>
     <rect
       transform="rotate(-135)"
       ry="10"
@@ -151,6 +146,11 @@
 </svg>
 
 <style lang="scss">
+  svg {
+    width: 100%;
+    aspect-ratio: 6 / 5;
+  }
+
   g {
     transition: transform 0.25s ease-in-out;
   }

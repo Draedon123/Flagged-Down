@@ -1,0 +1,46 @@
+[
+  {
+    "broadcast": "HELLO",
+    "replies": ["HELLO", "ACK", "COPY"]
+  },
+  {
+    "broadcast": "SIGNAL WEAK",
+    "replies": ["COPY", "ACK", "YES"]
+  },
+  {
+    "broadcast": "LOST CREW",
+    "replies": ["HELP", "WAIT", "SEARCHING"]
+  },
+  {
+    "broadcast": "MAYDAY",
+    "replies": ["COMING", "SOS", "ACK"]
+  },
+  {
+    "broadcast": "STORM",
+    "replies": ["HOLD FAST", "WAIT", "ACK"]
+  },
+  {
+    "broadcast": "FIRE",
+    "replies": ["WATER", "HELP", "ACK"]
+  },
+  {
+    "broadcast": "CAN YOU HEAR",
+    "replies": ["YES", "COPY", "ACK"]
+  },
+  {
+    "broadcast": "LOW POWER",
+    "replies": ["WAIT", "HOLD FAST", "ACK"]
+  },
+  {
+    "broadcast": "HOME SOON",
+    "replies": ["ACK", "YES", "SAFE"]
+  },
+  {
+    "broadcast": "SIGNAL LOST",
+    "replies": ["REPEAT", "WAIT", "HELLO"]
+  },
+  {
+    "broadcast": "THANK YOU",
+    "replies": []
+  }
+]

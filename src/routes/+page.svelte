@@ -2,6 +2,11 @@
   import Guide from "$lib/components/Guide.svelte";
   import Word from "$lib/components/Word.svelte";
 
+  import LostContact from "$lib/stories/lostContact.json";
+  import TheListeningPost from "$lib/stories/theListeningPost.json";
+
+  console.log({ LostContact, TheListeningPost });
+
   let word = $state("TEST");
 </script>
 

@@ -1,55 +1,24 @@
 <script lang="ts">
   import Guide from "$lib/components/Guide.svelte";
-  import Semaphore from "$lib/components/Semaphore.svelte";
+  import Word from "$lib/components/Word.svelte";
 
-  let orientations: [number, number] = $state([0, 0]);
-
-  let selected: 0 | 1 = 0;
-  function onKeyDown(event: KeyboardEvent): void {
-    if (event.code.startsWith("Arrow")) {
-      event.preventDefault();
-    }
-
-    switch (event.code) {
-      case "ArrowUp": {
-        orientations[selected]++;
-        break;
-      }
-      case "ArrowDown": {
-        orientations[selected]--;
-        break;
-      }
-      case "ArrowLeft": {
-        selected = 0;
-        break;
-      }
-      case "ArrowRight": {
-        selected = 1;
-        break;
-      }
-    }
-  }
+  let word = $state("TEST");
 </script>
 
 <svelte:head>
   <title>Flagged Down</title>
 </svelte:head>
 
-<svelte:document onkeydown={onKeyDown} />
-
 <main>
   <h1>Flagged Down</h1>
 
   <div class="centre">
-    <p>Use Left and Right arrows to select the arm</p>
-    <p>
-      Use the Up and Down arrows to rotate Clockwise and Anti-Clockwise
-      respectively
-    </p>
+    <input bind:value={word} />
     <div class="flag">
-      <Semaphore flag={orientations} />
+      <Word {word} delay_ms={1000} />
     </div>
   </div>
+
   <Guide />
 </main>
 

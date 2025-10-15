@@ -15,9 +15,10 @@
     word,
   });
 
-  let letterIndex = $state(-1);
+  let letterIndex = $state(0);
+  let resting = $state(true);
   let flag: [number, number] | Letter = $derived(
-    (word[letterIndex]?.toUpperCase() as Letter) ?? [4, 4]
+    resting ? [4, 4] : (word[letterIndex]?.toUpperCase() as Letter)
   );
 
   const loop = new Loop({
@@ -34,12 +35,16 @@
   });
 
   loop.addCallback(() => {
-    if (letterIndex >= $data.word.length - 1) {
+    if (letterIndex >= $data.word.length - 1 && resting) {
       loop.stop();
       return;
     }
 
-    letterIndex++;
+    if (resting) {
+      letterIndex++;
+    }
+
+    resting = !resting;
   });
 
   onDestroy(() => {

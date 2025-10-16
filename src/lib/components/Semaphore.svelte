@@ -58,6 +58,7 @@
     Z: [3, 2],
   };
 
+  export { FLAGS };
   export type { Letter };
 </script>
 

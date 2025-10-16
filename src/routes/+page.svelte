@@ -1,13 +1,8 @@
 <script lang="ts">
   import Guide from "$lib/components/Guide.svelte";
-  import Word from "$lib/components/Word.svelte";
+  import Story from "$lib/components/Story.svelte";
 
   import LostContact from "$lib/stories/lostContact.json";
-  import TheListeningPost from "$lib/stories/theListeningPost.json";
-
-  console.log({ LostContact, TheListeningPost });
-
-  let word = $state("TEST");
 </script>
 
 <svelte:head>
@@ -18,9 +13,8 @@
   <h1>Flagged Down</h1>
 
   <div class="centre">
-    <input bind:value={word} />
     <div class="flag">
-      <Word {word} delay_ms={1000} />
+      <Story story={LostContact} delay_ms={1000} />
     </div>
   </div>
 
@@ -62,6 +56,6 @@
   }
 
   .flag {
-    width: 50vw;
+    width: 30vw;
   }
 </style>

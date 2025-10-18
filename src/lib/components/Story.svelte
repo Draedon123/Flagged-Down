@@ -8,6 +8,8 @@
 </script>
 
 <script lang="ts">
+  import { onMount } from "svelte";
+
   import Semaphore, { FLAGS, REST_FLAG } from "./Semaphore.svelte";
 
   import Word from "./Word.svelte";
@@ -24,20 +26,37 @@
   let action: "receive" | "send" | "end" = $state("receive");
   let _interpretation = $state("");
   let interpretation = $derived(_interpretation.toUpperCase());
+  let letterIndex = $state(0);
+  let broadcastWord: Word | null = $state(null);
   let orientation: [number, number] = $state([REST_FLAG[0], REST_FLAG[1]]);
   let selectedArm = 0;
   let response = $state("");
-  let error = $state("");
+  let message: { message: string; error: boolean } = $state({
+    message: "",
+    error: false,
+  });
 
-  function check(event: SubmitEvent): void {
+  function setMessage(_message: string = "", error: boolean = false) {
+    message.message = _message;
+    message.error = error;
+  }
+
+  function check(event: Event): void {
     event.preventDefault();
 
-    const correct =
-      interpretation.replaceAll(" ", "") ===
-      stage.broadcast.replaceAll(" ", "");
+    setMessage();
+    const correct = interpretation === stage.broadcast[letterIndex];
 
     if (correct) {
-      action = "send";
+      if (letterIndex === stage.broadcast.length - 1) {
+        action = "send";
+        return;
+      }
+
+      broadcastWord?.nextLetter();
+      setMessage("Correct!");
+    } else {
+      setMessage("Wrong letter", true);
     }
   }
 
@@ -50,17 +69,17 @@
     );
 
     if (letter !== undefined) {
-      error = "";
+      setMessage();
       response += letter[0];
       orientation = [REST_FLAG[0], REST_FLAG[1]];
     } else {
-      error = "Invalid flag combination!";
+      setMessage("Invalid flag combination!", true);
     }
   }
 
   function sendMessage(): void {
     if (stage.replies.includes(response)) {
-      error = "";
+      setMessage();
 
       if (stageIndex === story.length - 1) {
         action = "end";
@@ -71,7 +90,7 @@
       action = "receive";
       _interpretation = "";
     } else {
-      error = "Invalid response!";
+      setMessage("Invalid response!", true);
     }
   }
 
@@ -102,30 +121,43 @@
       }
     }
   }
+
+  onMount(() => {
+    broadcastWord?.nextLetter();
+  });
 </script>
 
 <svelte:document onkeydown={onKeyDown} />
 
 <div class="container">
   {#if action === "receive"}
-    <Word word={stage.broadcast} {delay_ms} />
+    <Word
+      word={stage.broadcast}
+      {delay_ms}
+      bind:letterIndex
+      bind:this={broadcastWord}
+    />
   {:else if action === "send"}
     <Semaphore flag={orientation} />
   {/if}
   {#if action === "receive"}
     <label for="interpretation">
-      <p>What did they send?</p>
+      <p>What letter did they send?</p>
 
       <form onsubmit={check} autocomplete="off">
         <input
           name="interpretation"
           id="interpretation"
+          maxlength="1"
           bind:value={_interpretation}
         />
       </form>
     </label>
 
-    <button type="submit">Check</button>
+    {#if message.message !== ""}
+      <p class:error={message.error}>{message.message}</p>
+    {/if}
+    <button type="submit" onclick={check}>Check</button>
   {:else if action === "send"}
     <p>Send a response back!</p>
     <ul>
@@ -145,8 +177,8 @@
 
     <p>Your message: {response}</p>
 
-    {#if error !== ""}
-      <p style="color: red">{error}</p>
+    {#if message.message !== ""}
+      <p class:error={message.error}>{message.message}</p>
     {/if}
     <button onclick={sendFlag}>Send Flag</button>
     <button onclick={sendMessage}>Finalise Message</button>
@@ -167,5 +199,9 @@
 
   ul {
     text-align: left;
+  }
+
+  .error {
+    color: red;
   }
 </style>

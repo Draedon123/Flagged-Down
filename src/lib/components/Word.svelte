@@ -1,21 +1,19 @@
 <script lang="ts">
-  import { Loop } from "$lib/Loop";
-  import { onDestroy } from "svelte";
   import Semaphore, { REST_FLAG, type Letter } from "./Semaphore.svelte";
   import { writable } from "svelte/store";
 
   type Props = {
     word: string;
     delay_ms: number;
+    letterIndex?: number;
   };
 
-  let { word, delay_ms }: Props = $props();
+  let { word, delay_ms, letterIndex = $bindable(0) }: Props = $props();
 
   let data = writable({
     word,
   });
 
-  let letterIndex = $state(0);
   let resting = $state(true);
   let flag: [number, number] | Letter = $derived(
     resting
@@ -23,9 +21,23 @@
       : (word[letterIndex]?.toUpperCase() as Letter)
   );
 
-  const loop = new Loop({
-    deltaTime_ms: delay_ms,
-  });
+  let handle: NodeJS.Timeout | null = null;
+
+  export function nextLetter(): void {
+    if (handle !== null) {
+      clearTimeout(handle);
+      handle = null;
+    }
+
+    resting = true;
+    letterIndex++;
+    handle = setTimeout(() => {
+      resting = false;
+      handle = setTimeout(() => {
+        resting = true;
+      }, delay_ms);
+    }, delay_ms);
+  }
 
   $effect(() => {
     $data.word = word;
@@ -33,24 +45,6 @@
 
   data.subscribe(() => {
     letterIndex = -1;
-    loop.start(false);
-  });
-
-  loop.addCallback(() => {
-    if (letterIndex >= $data.word.length - 1 && resting) {
-      loop.stop();
-      return;
-    }
-
-    if (resting) {
-      letterIndex++;
-    }
-
-    resting = !resting;
-  });
-
-  onDestroy(() => {
-    loop.stop();
   });
 </script>
 

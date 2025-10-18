@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Loop } from "$lib/Loop";
-  import { onDestroy, onMount } from "svelte";
-  import Semaphore, { type Letter } from "./Semaphore.svelte";
+  import { onDestroy } from "svelte";
+  import Semaphore, { REST_FLAG, type Letter } from "./Semaphore.svelte";
   import { writable } from "svelte/store";
 
   type Props = {
@@ -18,7 +18,9 @@
   let letterIndex = $state(0);
   let resting = $state(true);
   let flag: [number, number] | Letter = $derived(
-    resting ? [4, 4] : (word[letterIndex]?.toUpperCase() as Letter)
+    resting
+      ? [REST_FLAG[0], REST_FLAG[1]]
+      : (word[letterIndex]?.toUpperCase() as Letter)
   );
 
   const loop = new Loop({

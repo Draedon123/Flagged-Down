@@ -8,7 +8,7 @@
 </script>
 
 <script lang="ts">
-  import Semaphore, { FLAGS } from "./Semaphore.svelte";
+  import Semaphore, { FLAGS, REST_FLAG } from "./Semaphore.svelte";
 
   import Word from "./Word.svelte";
 
@@ -21,15 +21,17 @@
 
   let stageIndex = $state(0);
   let stage = $derived(story[stageIndex]);
-  let action: "receive" | "send" = $state("receive");
+  let action: "receive" | "send" | "end" = $state("receive");
   let _interpretation = $state("");
   let interpretation = $derived(_interpretation.toUpperCase());
-  let orientation: [number, number] = $state([4, 4]);
+  let orientation: [number, number] = $state([REST_FLAG[0], REST_FLAG[1]]);
   let selectedArm = 0;
   let response = $state("");
   let error = $state("");
 
-  function check(): void {
+  function check(event: SubmitEvent): void {
+    event.preventDefault();
+
     const correct =
       interpretation.replaceAll(" ", "") ===
       stage.broadcast.replaceAll(" ", "");
@@ -42,15 +44,15 @@
   function sendFlag(): void {
     const letters = Object.entries(FLAGS);
     const letter = letters.find(
-      ([key, value]) =>
-        (8 + (orientation[0] % 8)) % 8 === value[0] &&
-        (8 + (orientation[1] % 8)) % 8 === value[1]
+      ([_, letterOrientation]) =>
+        (8 + (orientation[0] % 8)) % 8 === letterOrientation[0] &&
+        (8 + (orientation[1] % 8)) % 8 === letterOrientation[1]
     );
 
     if (letter !== undefined) {
       error = "";
       response += letter[0];
-      orientation = [4, 4];
+      orientation = [REST_FLAG[0], REST_FLAG[1]];
     } else {
       error = "Invalid flag combination!";
     }
@@ -59,6 +61,12 @@
   function sendMessage(): void {
     if (stage.replies.includes(response)) {
       error = "";
+
+      if (stageIndex === story.length - 1) {
+        action = "end";
+        return;
+      }
+
       stageIndex++;
       action = "receive";
       _interpretation = "";
@@ -101,22 +109,24 @@
 <div class="container">
   {#if action === "receive"}
     <Word word={stage.broadcast} {delay_ms} />
-  {:else}
+  {:else if action === "send"}
     <Semaphore flag={orientation} />
   {/if}
   {#if action === "receive"}
     <label for="interpretation">
       <p>What did they send?</p>
 
-      <input
-        name="interpretation"
-        id="interpretation"
-        bind:value={_interpretation}
-      />
+      <form onsubmit={check} autocomplete="off">
+        <input
+          name="interpretation"
+          id="interpretation"
+          bind:value={_interpretation}
+        />
+      </form>
     </label>
 
-    <button onclick={check}>Check</button>
-  {:else}
+    <button type="submit">Check</button>
+  {:else if action === "send"}
     <p>Send a response back!</p>
     <ul>
       {#each stage.replies as reply (reply)}

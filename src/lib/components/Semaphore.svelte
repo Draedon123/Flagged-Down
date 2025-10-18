@@ -58,7 +58,9 @@
     Z: [3, 2],
   };
 
-  export { FLAGS };
+  const REST_FLAG: Readonly<[number, number]> = [4, 4];
+
+  export { FLAGS, REST_FLAG };
   export type { Letter };
 </script>
 
@@ -69,7 +71,7 @@
 
   let { flag }: Props = $props();
   let orientations = $derived(
-    typeof flag === "string" ? (FLAGS[flag] ?? [4, 4]) : flag
+    typeof flag === "string" ? (FLAGS[flag] ?? REST_FLAG) : flag
   );
 
   let flipLeft = $derived(orientations[0] % 8 < 4 && orientations[0] % 8 !== 0);

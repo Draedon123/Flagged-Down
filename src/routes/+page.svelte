@@ -14,7 +14,7 @@
 
   <div class="centre">
     <div class="flag">
-      <Story story={LostContact} delay_ms={1000} />
+      <Story story={LostContact} delay_ms={2000} />
     </div>
   </div>
 

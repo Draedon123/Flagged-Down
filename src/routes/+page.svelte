@@ -135,10 +135,13 @@
     min-height: 3em;
     max-height: 75vh;
     padding: 8px;
+    border-radius: 0 0 1em 0;
 
     color: #fff;
+    background-color: #0042;
+
     box-shadow: #64646f33 0px 7px 29px 0px;
-    font-family: monospace;
+    font-family: "Roboto Mono" monospace;
 
     overflow-y: scroll;
     scrollbar-width: 0;

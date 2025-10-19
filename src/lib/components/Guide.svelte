@@ -59,7 +59,8 @@
 </div>
 
 <style lang="scss">
-  $background-colour: #acc5e0cc;
+  $backgorund-color: #0041;
+  $background-colour-hover: #0042;
   $transition-time: 0.5s;
 
   .container {
@@ -94,8 +95,9 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transition: background-color 0.25s;
 
+    background-color: $backgorund-color;
     &:hover {
-      background-color: $background-colour;
+      background-color: $background-colour-hover;
     }
 
     overflow-y: scroll;
@@ -128,8 +130,9 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transition: background-color 0.25s;
 
+    background-color: $backgorund-color;
     &:hover {
-      background-color: $background-colour;
+      background-color: $background-colour-hover;
     }
 
     input {

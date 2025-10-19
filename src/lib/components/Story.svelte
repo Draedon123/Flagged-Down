@@ -193,12 +193,14 @@
       </form>
     </label>
 
+    <br />
+
     <button type="submit" onclick={check}>Check</button>
     {#if message.message !== ""}
       <p class:error={message.error}>{message.message}</p>
     {/if}
   {:else if action === "send"}
-    <p>Send a response back!</p>
+    <p style="margin-bottom: 0;">Send a response back!</p>
     <ul>
       {#each stage.replies as reply (reply)}
         <li>{reply}</li>
@@ -253,5 +255,47 @@
     margin-bottom: 0.5em;
 
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: #0041;
+    border-radius: 1em;
+  }
+
+  input,
+  button {
+    $background-colour: #5a95cf;
+
+    color: white;
+    background-color: $background-colour;
+
+    border: 1px solid mix($background-colour, #000, 90%);
+
+    transition:
+      background-color 0.25s,
+      border-color 0.25s;
+
+    &:hover {
+      background-color: mix($background-colour, #000, 90%);
+      border-color: mix($background-colour, #000, 75%);
+    }
+  }
+
+  input {
+    height: 1.5em;
+    border-radius: 0.75em;
+
+    padding: 0.5ch;
+    text-indent: 0.5ch;
+    font-size: medium;
+  }
+
+  button {
+    height: 2em;
+    font-size: medium;
+    padding: 1.25em;
+    border-radius: 1.25em;
+
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
   }
 </style>

@@ -8,8 +8,11 @@
 </script>
 
 <script lang="ts">
+  import { getContext } from "svelte";
+
   import Semaphore, { FLAGS, REST_FLAG } from "./Semaphore.svelte";
   import Word from "./Word.svelte";
+  import type { Writable } from "svelte/store";
 
   type Props = {
     story: Story;
@@ -32,6 +35,8 @@
     error: false,
   });
 
+  const logContext = getContext<Writable<string[]>>("log");
+
   function setMessage(_message: string = "", error: boolean = false) {
     message.message = _message;
     message.error = error;
@@ -44,6 +49,11 @@
     const correct = letter.toUpperCase() === stage.broadcast[letterIndex];
 
     if (correct) {
+      if (letterIndex === 0) {
+        $logContext.push("");
+      }
+
+      $logContext[$logContext.length - 1] += letter.toUpperCase();
       if (letterIndex === stage.broadcast.length - 1) {
         action = "send";
         return;
@@ -78,6 +88,12 @@
     }
 
     setMessage();
+
+    if (response === "") {
+      $logContext.push("");
+    }
+
+    $logContext[$logContext.length - 1] += letter[0].toUpperCase();
     response += letter[0];
     orientation = [REST_FLAG[0], REST_FLAG[1]];
   }
@@ -184,8 +200,6 @@
       anti-clockwise respectively
     </p>
     <p>Click Enter to send flag</p>
-
-    <p>Your message: {response}</p>
 
     {#if message.message !== ""}
       <p class:error={message.error}>{message.message}</p>

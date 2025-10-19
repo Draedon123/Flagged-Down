@@ -1,0 +1,10 @@
+[
+  {
+    "broadcast": "TEST",
+    "replies": ["TEST", "ACK", "YES"]
+  },
+  {
+    "broadcast": "END",
+    "replies": ["COPY", "ACK", "END"]
+  }
+]

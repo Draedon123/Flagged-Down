@@ -1,0 +1,34 @@
+[
+  {
+    "broadcast": "HELLOCOAST",
+    "replies": ["HELLO", "COPY", "ACK"]
+  },
+  {
+    "broadcast": "DRIFTING",
+    "replies": ["OK", "COPY", "ACK"]
+  },
+  {
+    "broadcast": "BEARING",
+    "replies": ["WAIT", "CHECKING", "HOLD"]
+  },
+  {
+    "broadcast": "STANDBY",
+    "replies": ["NORTH", "EAST", "WEST"]
+  },
+  {
+    "broadcast": "THANKYOU",
+    "replies": ["FOLLOWLIGHT"]
+  },
+  {
+    "broadcast": "FOLLOWING",
+    "replies": ["STANDBY", "ACK", "OK"]
+  },
+  {
+    "broadcast": "SEECOAST",
+    "replies": ["COPY", "ACK", "OK"]
+  },
+  {
+    "broadcast": "MESSAGEEND",
+    "replies": ["ACK", "BYE", "OVER"]
+  }
+]

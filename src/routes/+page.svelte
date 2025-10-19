@@ -4,6 +4,7 @@
   import LostContact from "$lib/stories/lostContact.json";
   import TheListeningPost from "$lib/stories/theListeningPost.json";
   import Test from "$lib/stories/test.json";
+  import Drifter from "$lib/stories/drifter.json";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
 
@@ -11,6 +12,7 @@
     "Lost Contact": LostContact,
     Test: import.meta.env.DEV ? Test : [],
     "The Listening Post": TheListeningPost,
+    Drifter,
   })
     .map(([name, story]) => {
       return {

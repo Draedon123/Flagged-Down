@@ -41,6 +41,6 @@
   },
   {
     "broadcast": "THANKYOU",
-    "replies": []
+    "replies": ["ACK", "OVER", "MESSAGEEND"]
   }
 ]

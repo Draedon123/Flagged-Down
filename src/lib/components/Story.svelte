@@ -167,16 +167,18 @@
 <svelte:document onkeydown={onKeyDown} />
 
 <div class="container">
-  {#if action === "receive"}
-    <Word
-      word={stage.broadcast}
-      {delay_ms}
-      bind:letterIndex
-      bind:this={broadcastWord}
-    />
-  {:else if action === "send"}
-    <Semaphore flag={orientation} />
-  {/if}
+  <div class="flag">
+    {#if action === "receive"}
+      <Word
+        word={stage.broadcast}
+        {delay_ms}
+        bind:letterIndex
+        bind:this={broadcastWord}
+      />
+    {:else if action === "send"}
+      <Semaphore flag={orientation} />
+    {/if}
+  </div>
   {#if action === "receive"}
     <label for="interpretation">
       <p>What letter did they send?</p>
@@ -236,7 +238,20 @@
     text-align: left;
   }
 
+  p {
+    margin-top: 0;
+  }
+
   .error {
     color: red;
+  }
+
+  .flag {
+    width: 100%;
+    height: 100%;
+
+    margin-bottom: 0.5em;
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }
 </style>

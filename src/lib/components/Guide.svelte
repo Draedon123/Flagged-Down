@@ -59,8 +59,7 @@
 </div>
 
 <style lang="scss">
-  $background-colour: #bbba;
-  $background-colour-hover: #bbb;
+  $background-colour: #acc5e0cc;
   $transition-time: 0.5s;
 
   .container {
@@ -68,7 +67,7 @@
     top: 0;
     right: 0;
 
-    width: 35vw;
+    width: 33vw;
     height: 100vh;
 
     transition: width $transition-time cubic-bezier(0.65, 0, 0.35, 1);
@@ -92,11 +91,11 @@
 
     float: right;
 
-    background-color: $background-colour;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transition: background-color 0.25s;
 
     &:hover {
-      background-color: $background-colour-hover;
+      background-color: $background-colour;
     }
 
     overflow-y: scroll;
@@ -120,16 +119,17 @@
     position: absolute;
     top: 1em;
     right: 100%;
+    border-radius: 5px;
 
     display: flex;
     height: max-content;
     font-size: medium;
 
-    background-color: $background-colour;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transition: background-color 0.25s;
 
     &:hover {
-      background-color: $background-colour-hover;
+      background-color: $background-colour;
     }
 
     input {

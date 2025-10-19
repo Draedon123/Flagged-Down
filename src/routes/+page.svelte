@@ -29,7 +29,7 @@
 
   let storyComponent: Story;
   let storyState: "receive" | "send" | "end" = $state("receive");
-  let storyIndex = $state("0");
+  let storyIndex = $state("1");
   let selectedStory = $derived(stories[parseInt(storyIndex)]);
 
   function play(): void {
@@ -89,6 +89,9 @@
     background-color: #fff;
     min-height: 100vh;
 
+    font-family: "Roboto Mono", monospace;
+    background: radial-gradient(circle at 50% 40%, #bcd1e8, #b0b7c1);
+
     scrollbar-width: 0;
     &::-webkit-scrollbar {
       display: none;
@@ -134,7 +137,7 @@
     padding: 8px;
 
     color: #fff;
-    background-color: #888;
+    box-shadow: #64646f33 0px 7px 29px 0px;
     font-family: monospace;
 
     overflow-y: scroll;

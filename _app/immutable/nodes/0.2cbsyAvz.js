@@ -1,1 +1,0 @@
-import"../chunks/DsnmJJEf.js";import{c as p,h as i,f as l,s as m,a,b as f,n as h}from"../chunks/KOvHdHmI.js";var c=f('<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&amp;display=swap" rel="stylesheet"/>');function v(s,t){var o=p();i(e=>{var r=c();a(e,r)});var n=l(o);m(n,()=>t.children??h),a(s,o)}export{v as component};

@@ -4,11 +4,11 @@
     "replies": ["HELLO", "ACK", "COPY"]
   },
   {
-    "broadcast": "SIGNAL WEAK",
+    "broadcast": "SIGNALWEAK",
     "replies": ["COPY", "ACK", "YES"]
   },
   {
-    "broadcast": "LOST CREW",
+    "broadcast": "LOSTCREW",
     "replies": ["HELP", "WAIT", "SEARCHING"]
   },
   {
@@ -17,30 +17,30 @@
   },
   {
     "broadcast": "STORM",
-    "replies": ["HOLD FAST", "WAIT", "ACK"]
+    "replies": ["HOLDFAST", "WAIT", "ACK"]
   },
   {
     "broadcast": "FIRE",
     "replies": ["WATER", "HELP", "ACK"]
   },
   {
-    "broadcast": "CAN YOU HEAR",
+    "broadcast": "CANYOUHEAR",
     "replies": ["YES", "COPY", "ACK"]
   },
   {
-    "broadcast": "LOW POWER",
-    "replies": ["WAIT", "HOLD FAST", "ACK"]
+    "broadcast": "LOWPOWER",
+    "replies": ["WAIT", "HOLDFAST", "ACK"]
   },
   {
-    "broadcast": "HOME SOON",
+    "broadcast": "HOMESOON",
     "replies": ["ACK", "YES", "SAFE"]
   },
   {
-    "broadcast": "SIGNAL LOST",
+    "broadcast": "SIGNALLOST",
     "replies": ["REPEAT", "WAIT", "HELLO"]
   },
   {
-    "broadcast": "THANK YOU",
+    "broadcast": "THANKYOU",
     "replies": []
   }
 ]

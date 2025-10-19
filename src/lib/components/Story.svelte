@@ -8,10 +8,7 @@
 </script>
 
 <script lang="ts">
-  import { onMount } from "svelte";
-
   import Semaphore, { FLAGS, REST_FLAG } from "./Semaphore.svelte";
-
   import Word from "./Word.svelte";
 
   type Props = {
@@ -24,8 +21,7 @@
   let stageIndex = $state(0);
   let stage = $derived(story[stageIndex]);
   let action: "receive" | "send" | "end" = $state("receive");
-  let _interpretation = $state("");
-  let interpretation = $derived(_interpretation.toUpperCase());
+  let letter = $state("");
   let letterIndex = $state(0);
   let broadcastWord: Word | null = $state(null);
   let orientation: [number, number] = $state([REST_FLAG[0], REST_FLAG[1]]);
@@ -45,7 +41,7 @@
     event.preventDefault();
 
     setMessage();
-    const correct = interpretation === stage.broadcast[letterIndex];
+    const correct = letter.toUpperCase() === stage.broadcast[letterIndex];
 
     if (correct) {
       if (letterIndex === stage.broadcast.length - 1) {
@@ -54,6 +50,7 @@
       }
 
       broadcastWord?.nextLetter();
+      letter = "";
       setMessage("Correct!");
     } else {
       setMessage("Wrong letter", true);
@@ -68,13 +65,21 @@
         (8 + (orientation[1] % 8)) % 8 === letterOrientation[1]
     );
 
-    if (letter !== undefined) {
-      setMessage();
-      response += letter[0];
-      orientation = [REST_FLAG[0], REST_FLAG[1]];
-    } else {
+    if (letter === undefined) {
       setMessage("Invalid flag combination!", true);
+      return;
     }
+
+    const newResponse = response + letter[0];
+
+    if (!stage.replies.some((reply) => reply.startsWith(newResponse))) {
+      setMessage(`No valid reply starts with, or is, "${newResponse}"!`, true);
+      return;
+    }
+
+    setMessage();
+    response += letter[0];
+    orientation = [REST_FLAG[0], REST_FLAG[1]];
   }
 
   function sendMessage(): void {
@@ -88,7 +93,8 @@
 
       stageIndex++;
       action = "receive";
-      _interpretation = "";
+      letter = "";
+      response = "";
     } else {
       setMessage("Invalid response!", true);
     }
@@ -97,12 +103,19 @@
   function onKeyDown(event: KeyboardEvent): void {
     const code = event.code;
 
-    if (!code.startsWith("Arrow") || action !== "send") {
+    if (code.startsWith("Arrow") && action === "send") {
+      selectArm(event);
       return;
     }
 
+    if (code === "Enter" && action === "send") {
+      sendFlag();
+    }
+  }
+
+  function selectArm(event: KeyboardEvent): void {
     event.preventDefault();
-    switch (code) {
+    switch (event.code) {
       case "ArrowLeft": {
         selectedArm = 0;
         break;
@@ -121,10 +134,6 @@
       }
     }
   }
-
-  onMount(() => {
-    broadcastWord?.nextLetter();
-  });
 </script>
 
 <svelte:document onkeydown={onKeyDown} />
@@ -149,15 +158,15 @@
           name="interpretation"
           id="interpretation"
           maxlength="1"
-          bind:value={_interpretation}
+          bind:value={letter}
         />
       </form>
     </label>
 
+    <button type="submit" onclick={check}>Check</button>
     {#if message.message !== ""}
       <p class:error={message.error}>{message.message}</p>
     {/if}
-    <button type="submit" onclick={check}>Check</button>
   {:else if action === "send"}
     <p>Send a response back!</p>
     <ul>
@@ -174,13 +183,13 @@
       Use the up and down arrows to rotate the selected arm clockwise and
       anti-clockwise respectively
     </p>
+    <p>Click Enter to send flag</p>
 
     <p>Your message: {response}</p>
 
     {#if message.message !== ""}
       <p class:error={message.error}>{message.message}</p>
     {/if}
-    <button onclick={sendFlag}>Send Flag</button>
     <button onclick={sendMessage}>Finalise Message</button>
   {/if}
 </div>

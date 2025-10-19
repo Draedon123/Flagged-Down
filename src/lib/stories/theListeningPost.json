@@ -9,7 +9,7 @@
   },
   {
     "broadcast": "UNKNOWN",
-    "replies": ["WHO ARE YOU", "REPEAT", "UNCLEAR"]
+    "replies": ["WHOAREYOU", "REPEAT", "UNCLEAR"]
   },
   {
     "broadcast": "DISTANT",
@@ -29,18 +29,18 @@
   },
   {
     "broadcast": "WAIT",
-    "replies": ["OK", "STANDING BY", "ACK"]
+    "replies": ["OK", "STANDINGBY", "ACK"]
   },
   {
-    "broadcast": "YOU HEAR",
+    "broadcast": "YOUHEAR",
     "replies": ["ACK", "YES", "COPY"]
   },
   {
-    "broadcast": "WE NEVER LEFT",
+    "broadcast": "WENEVERLEFT",
     "replies": ["ACK", "COPY", "OK"]
   },
   {
-    "broadcast": "MESSAGE END",
+    "broadcast": "MESSAGEEND",
     "replies": ["ACK", "COPY", "OK"]
   }
 ]

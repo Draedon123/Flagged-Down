@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import Semaphore, { REST_FLAG, type Letter } from "./Semaphore.svelte";
   import { writable } from "svelte/store";
 
@@ -45,6 +46,10 @@
 
   data.subscribe(() => {
     letterIndex = -1;
+  });
+
+  onMount(() => {
+    nextLetter();
   });
 </script>
 

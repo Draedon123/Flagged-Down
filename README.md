@@ -9,3 +9,4 @@ A little game about decoding Flag Semaphores
 - https://fonts.google.com/specimen/Roboto+Mono
 - https://getcssscan.com/css-box-shadow-examples
 - https://svgcrop.com/
+- https://blog.logrocket.com/creating-custom-select-dropdown-css/

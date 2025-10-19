@@ -225,7 +225,8 @@
 </div>
 
 <style lang="scss">
-  @use "sass:color";
+  @use "../styles/input.scss";
+  @use "../styles/button.scss";
 
   .container {
     display: flex;
@@ -261,43 +262,11 @@
     border-radius: 1em;
   }
 
-  input,
-  button {
-    $background-colour: #5a95cf;
-
-    color: white;
-    background-color: $background-colour;
-
-    border: 1px solid color.mix($background-colour, #000, 90%);
-
-    transition:
-      background-color 0.25s,
-      border-color 0.25s;
-
-    &:hover {
-      background-color: color.mix($background-colour, #000, 90%);
-      border-color: color.mix($background-colour, #000, 75%);
-    }
-  }
-
   input {
-    height: 1.5em;
-    border-radius: 0.75em;
-
-    padding: 0.5ch;
-    text-indent: 0.5ch;
-    font-size: medium;
+    @include input.input;
   }
 
   button {
-    height: 2em;
-    font-size: medium;
-    padding: 1.25em;
-    border-radius: 1.25em;
-
-    display: flex;
-    align-items: center;
-
-    cursor: pointer;
+    @include button.button;
   }
 </style>

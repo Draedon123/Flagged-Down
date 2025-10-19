@@ -27,13 +27,15 @@
     })
   );
 
+  let firstLoad = $state(true);
   let storyComponent: Story;
-  let storyState: "receive" | "send" | "end" = $state("receive");
+  let storyState: "receive" | "send" | "end" = $state("end");
   let storyIndex = $state("0");
   let selectedStory = $derived(stories[parseInt(storyIndex)]);
 
   function play(): void {
     storyComponent.reset();
+    firstLoad = false;
   }
 </script>
 
@@ -68,12 +70,20 @@
     </div>
 
     {#if storyState === "end"}
-      <p>Story finished! Select new story?</p>
-      <select bind:value={storyIndex}>
-        {#each stories as story, i (story.name)}
-          <option value={i}>{story.name}</option>
-        {/each}
-      </select>
+      <p>
+        {#if firstLoad}
+          Select story:
+        {:else}
+          Story finished! Select new story?
+        {/if}
+      </p>
+      <div class="dropdown">
+        <select bind:value={storyIndex}>
+          {#each stories as story, i (story.name)}
+            <option value={i.toString()}>{story.name}</option>
+          {/each}
+        </select>
+      </div>
       <button onclick={play}>Play</button>
     {/if}
   </div>
@@ -82,6 +92,8 @@
 </main>
 
 <style lang="scss">
+  @use "../lib/styles/button.scss";
+
   :global(body) {
     margin: 0;
     overflow: hidden scroll;
@@ -157,5 +169,56 @@
 
   .hidden {
     display: none;
+  }
+
+  button {
+    @include button.button;
+  }
+
+  .dropdown {
+    position: relative;
+
+    $arrow-size: 0.3em;
+    &::before,
+    &::after {
+      content: "";
+
+      position: absolute;
+      right: 1ch;
+
+      pointer-events: none;
+    }
+
+    &::before {
+      border-left: $arrow-size solid transparent;
+      border-right: $arrow-size solid transparent;
+      border-bottom: $arrow-size solid black;
+
+      top: 50%;
+      transform: translateY(calc(-0.5 * $arrow-size));
+    }
+
+    &::after {
+      border-left: $arrow-size solid transparent;
+      border-right: $arrow-size solid transparent;
+      border-top: $arrow-size solid black;
+
+      top: 50%;
+      transform: translateY(calc(-2 * $arrow-size));
+    }
+
+    select {
+      width: max-content;
+      padding: 0.675em 6em 0.675em 1em;
+      margin-bottom: 0.5em;
+      border: 1px solid #caced1;
+      border-radius: 0.25rem;
+
+      appearance: none;
+      background-color: #fff;
+      color: #000;
+
+      cursor: pointer;
+    }
   }
 </style>

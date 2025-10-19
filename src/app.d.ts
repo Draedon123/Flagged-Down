@@ -12,6 +12,10 @@ declare global {
   type WithChildren = {
     children?: import("svelte").Snippet;
   };
+
+  type StoryContext = import("svelte/store").Writable<{
+    log: string[];
+  }>;
 }
 
 export {};

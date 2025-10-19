@@ -1,12 +1,39 @@
 <script lang="ts">
   import Guide from "$lib/components/Guide.svelte";
-  import Story from "$lib/components/Story.svelte";
+  import Story, { type StoryData } from "$lib/components/Story.svelte";
   import LostContact from "$lib/stories/lostContact.json";
-  import Test from "$lib/stories/test.json";
+  import TheListeningPost from "$lib/stories/theListeningPost.json";
+  // import Test from "$lib/stories/test.json";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
 
-  const logContext = setContext("log", writable<string[]>([]));
+  const stories: { name: string; story: StoryData }[] = Object.entries({
+    "Lost Contact": LostContact,
+    // Test,
+    "The Listening Post": TheListeningPost,
+  })
+    .map(([name, story]) => {
+      return {
+        name,
+        story,
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const context: StoryContext = setContext(
+    "story",
+    writable({
+      log: [],
+    })
+  );
+
+  let storyComponent: Story;
+  let storyState: "receive" | "send" | "end" = $state("receive");
+  let storyIndex = $state("1");
+  let selectedStory = $derived(stories[parseInt(storyIndex)]);
+
+  function play(): void {
+    storyComponent.reset();
+  }
 </script>
 
 <svelte:head>
@@ -20,7 +47,7 @@
     <h1>Log</h1>
     <br />
 
-    {#each $logContext as message, i}
+    {#each $context.log as message, i (i)}
       {@const sender = i % 2 === 0 ? "BROADCAST" : "YOU"}
 
       {sender}: {message}
@@ -29,9 +56,25 @@
   </div>
 
   <div class="centre">
-    <div class="flag">
-      <Story story={Test} delay_ms={2000} />
+    <div class="story" class:hidden={storyState === "end"}>
+      <p>{selectedStory.name}</p>
+      <Story
+        story={selectedStory.story}
+        delay_ms={2000}
+        bind:action={storyState}
+        bind:this={storyComponent}
+      />
     </div>
+
+    {#if storyState === "end"}
+      <p>Story finished! Select new story?</p>
+      <select bind:value={storyIndex}>
+        {#each stories as story, i (story.name)}
+          <option value={i}>{story.name}</option>
+        {/each}
+      </select>
+      <button onclick={play}>Play</button>
+    {/if}
   </div>
 
   <Guide />
@@ -71,8 +114,12 @@
     height: 100%;
   }
 
-  .flag {
+  .story {
     width: 30vw;
+
+    p {
+      text-align: center;
+    }
   }
 
   .log {
@@ -99,5 +146,9 @@
       font-size: medium;
       margin: 0;
     }
+  }
+
+  .hidden {
+    display: none;
   }
 </style>

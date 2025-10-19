@@ -1,10 +1,10 @@
 <script lang="ts" module>
-  type Story = {
+  type StoryData = {
     broadcast: string;
     replies: string[];
   }[];
 
-  export type { Story };
+  export type { StoryData };
 </script>
 
 <script lang="ts">
@@ -12,18 +12,17 @@
 
   import Semaphore, { FLAGS, REST_FLAG } from "./Semaphore.svelte";
   import Word from "./Word.svelte";
-  import type { Writable } from "svelte/store";
 
   type Props = {
-    story: Story;
+    story: StoryData;
     delay_ms: number;
+    action?: "receive" | "send" | "end";
   };
 
-  let { story, delay_ms }: Props = $props();
+  let { story, delay_ms, action = $bindable("receive") }: Props = $props();
 
   let stageIndex = $state(0);
   let stage = $derived(story[stageIndex]);
-  let action: "receive" | "send" | "end" = $state("receive");
   let letter = $state("");
   let letterIndex = $state(0);
   let broadcastWord: Word | null = $state(null);
@@ -35,7 +34,18 @@
     error: false,
   });
 
-  const logContext = getContext<Writable<string[]>>("log");
+  const context: StoryContext = getContext("story");
+
+  export function reset(): void {
+    $context.log = [];
+    stageIndex = 0;
+    letter = "";
+    response = "";
+    letterIndex = 0;
+    broadcastWord = null;
+    action = "receive";
+    setMessage();
+  }
 
   function setMessage(_message: string = "", error: boolean = false) {
     message.message = _message;
@@ -50,10 +60,10 @@
 
     if (correct) {
       if (letterIndex === 0) {
-        $logContext.push("");
+        $context.log.push("");
       }
 
-      $logContext[$logContext.length - 1] += letter.toUpperCase();
+      $context.log[$context.log.length - 1] += letter.toUpperCase();
       if (letterIndex === stage.broadcast.length - 1) {
         action = "send";
         return;
@@ -70,6 +80,7 @@
   function sendFlag(): void {
     const letters = Object.entries(FLAGS);
     const letter = letters.find(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       ([_, letterOrientation]) =>
         (8 + (orientation[0] % 8)) % 8 === letterOrientation[0] &&
         (8 + (orientation[1] % 8)) % 8 === letterOrientation[1]
@@ -90,10 +101,10 @@
     setMessage();
 
     if (response === "") {
-      $logContext.push("");
+      $context.log.push("");
     }
 
-    $logContext[$logContext.length - 1] += letter[0].toUpperCase();
+    $context.log[$context.log.length - 1] += letter[0].toUpperCase();
     response += letter[0];
     orientation = [REST_FLAG[0], REST_FLAG[1]];
   }
@@ -111,6 +122,7 @@
       action = "receive";
       letter = "";
       response = "";
+      selectedArm = 0;
     } else {
       setMessage("Invalid response!", true);
     }

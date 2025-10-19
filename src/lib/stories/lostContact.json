@@ -1,46 +1,49 @@
-[
-  {
-    "broadcast": "HELLO",
-    "replies": ["HELLO", "ACK", "COPY"]
-  },
-  {
-    "broadcast": "SIGNALWEAK",
-    "replies": ["COPY", "ACK", "YES"]
-  },
-  {
-    "broadcast": "LOSTCREW",
-    "replies": ["HELP", "WAIT", "SEARCHING"]
-  },
-  {
-    "broadcast": "MAYDAY",
-    "replies": ["COMING", "SOS", "ACK"]
-  },
-  {
-    "broadcast": "STORM",
-    "replies": ["HOLDFAST", "WAIT", "ACK"]
-  },
-  {
-    "broadcast": "FIRE",
-    "replies": ["WATER", "HELP", "ACK"]
-  },
-  {
-    "broadcast": "CANYOUHEAR",
-    "replies": ["YES", "COPY", "ACK"]
-  },
-  {
-    "broadcast": "LOWPOWER",
-    "replies": ["WAIT", "HOLDFAST", "ACK"]
-  },
-  {
-    "broadcast": "HOMESOON",
-    "replies": ["ACK", "YES", "SAFE"]
-  },
-  {
-    "broadcast": "SIGNALLOST",
-    "replies": ["REPEAT", "WAIT", "HELLO"]
-  },
-  {
-    "broadcast": "THANKYOU",
-    "replies": ["ACK", "OVER", "MESSAGEEND"]
-  }
-]
+{
+  "name": "Lost Contact",
+  "story": [
+    {
+      "broadcast": "HELLO",
+      "replies": ["HELLO", "ACK", "COPY"]
+    },
+    {
+      "broadcast": "SIGNALWEAK",
+      "replies": ["COPY", "ACK", "YES"]
+    },
+    {
+      "broadcast": "LOSTCREW",
+      "replies": ["HELP", "WAIT", "SEARCHING"]
+    },
+    {
+      "broadcast": "MAYDAY",
+      "replies": ["COMING", "SOS", "ACK"]
+    },
+    {
+      "broadcast": "STORM",
+      "replies": ["HOLDFAST", "WAIT", "ACK"]
+    },
+    {
+      "broadcast": "FIRE",
+      "replies": ["WATER", "HELP", "ACK"]
+    },
+    {
+      "broadcast": "CANYOUHEAR",
+      "replies": ["YES", "COPY", "ACK"]
+    },
+    {
+      "broadcast": "LOWPOWER",
+      "replies": ["WAIT", "HOLDFAST", "ACK"]
+    },
+    {
+      "broadcast": "HOMESOON",
+      "replies": ["ACK", "YES", "SAFE"]
+    },
+    {
+      "broadcast": "SIGNALLOST",
+      "replies": ["REPEAT", "WAIT", "HELLO"]
+    },
+    {
+      "broadcast": "THANKYOU",
+      "replies": ["ACK", "OVER", "MESSAGEEND"]
+    }
+  ]
+}

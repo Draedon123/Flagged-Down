@@ -1,27 +1,23 @@
 <script lang="ts">
   import Guide from "$lib/components/Guide.svelte";
   import Story, { type StoryData } from "$lib/components/Story.svelte";
+  import { setContext } from "svelte";
+  import { writable } from "svelte/store";
+
   import LostContact from "$lib/stories/lostContact.json";
   import TheListeningPost from "$lib/stories/theListeningPost.json";
   import Test from "$lib/stories/test.json";
   import Drifter from "$lib/stories/drifter.json";
-  import { setContext } from "svelte";
-  import { writable } from "svelte/store";
 
-  const stories: { name: string; story: StoryData }[] = Object.entries({
-    "Lost Contact": LostContact,
-    Test: import.meta.env.DEV ? Test : [],
-    "The Listening Post": TheListeningPost,
+  const stories: { name: string; story: StoryData }[] = [
+    LostContact,
+    TheListeningPost,
+    Test,
     Drifter,
-  })
-    .map(([name, story]) => {
-      return {
-        name,
-        story,
-      };
-    })
-    .filter((story) => story.story.length > 0)
+  ]
+    .filter((story) => import.meta.env.DEV || story.name !== "_Test")
     .sort((a, b) => a.name.localeCompare(b.name));
+
   const context: StoryContext = setContext(
     "story",
     writable({

@@ -1,46 +1,49 @@
-[
-  {
-    "broadcast": "HELLO",
-    "replies": ["HELLO", "ACK", "READY"]
-  },
-  {
-    "broadcast": "ECHO",
-    "replies": ["COPY", "ACK", "YES"]
-  },
-  {
-    "broadcast": "UNKNOWN",
-    "replies": ["WHOAREYOU", "REPEAT", "UNCLEAR"]
-  },
-  {
-    "broadcast": "DISTANT",
-    "replies": ["WHERE", "COPY", "ACK"]
-  },
-  {
-    "broadcast": "HOME",
-    "replies": ["COMING", "ACK", "SOON"]
-  },
-  {
-    "broadcast": "FIRE",
-    "replies": ["DANGER", "HELP", "ACK"]
-  },
-  {
-    "broadcast": "LOST",
-    "replies": ["HELP", "WAIT", "SEARCHING"]
-  },
-  {
-    "broadcast": "WAIT",
-    "replies": ["OK", "STANDINGBY", "ACK"]
-  },
-  {
-    "broadcast": "YOUHEAR",
-    "replies": ["ACK", "YES", "COPY"]
-  },
-  {
-    "broadcast": "WENEVERLEFT",
-    "replies": ["ACK", "COPY", "OK"]
-  },
-  {
-    "broadcast": "MESSAGEEND",
-    "replies": ["ACK", "COPY", "OK"]
-  }
-]
+{
+  "name": "The Listening Post",
+  "story": [
+    {
+      "broadcast": "HELLO",
+      "replies": ["HELLO", "ACK", "READY"]
+    },
+    {
+      "broadcast": "ECHO",
+      "replies": ["COPY", "ACK", "YES"]
+    },
+    {
+      "broadcast": "UNKNOWN",
+      "replies": ["WHOAREYOU", "REPEAT", "UNCLEAR"]
+    },
+    {
+      "broadcast": "DISTANT",
+      "replies": ["WHERE", "COPY", "ACK"]
+    },
+    {
+      "broadcast": "HOME",
+      "replies": ["COMING", "ACK", "SOON"]
+    },
+    {
+      "broadcast": "FIRE",
+      "replies": ["DANGER", "HELP", "ACK"]
+    },
+    {
+      "broadcast": "LOST",
+      "replies": ["HELP", "WAIT", "SEARCHING"]
+    },
+    {
+      "broadcast": "WAIT",
+      "replies": ["OK", "STANDINGBY", "ACK"]
+    },
+    {
+      "broadcast": "YOUHEAR",
+      "replies": ["ACK", "YES", "COPY"]
+    },
+    {
+      "broadcast": "WENEVERLEFT",
+      "replies": ["ACK", "COPY", "OK"]
+    },
+    {
+      "broadcast": "MESSAGEEND",
+      "replies": ["ACK", "COPY", "OK"]
+    }
+  ]
+}

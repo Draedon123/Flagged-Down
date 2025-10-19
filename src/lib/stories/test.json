@@ -1,10 +1,13 @@
-[
-  {
-    "broadcast": "TEST",
-    "replies": ["TEST", "ACK", "YES"]
-  },
-  {
-    "broadcast": "END",
-    "replies": ["COPY", "ACK", "END"]
-  }
-]
+{
+  "name": "_Test",
+  "story": [
+    {
+      "broadcast": "TEST",
+      "replies": ["TEST", "ACK", "YES"]
+    },
+    {
+      "broadcast": "END",
+      "replies": ["COPY", "ACK", "END"]
+    }
+  ]
+}

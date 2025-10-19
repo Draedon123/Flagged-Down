@@ -3,13 +3,13 @@
   import Story, { type StoryData } from "$lib/components/Story.svelte";
   import LostContact from "$lib/stories/lostContact.json";
   import TheListeningPost from "$lib/stories/theListeningPost.json";
-  // import Test from "$lib/stories/test.json";
+  import Test from "$lib/stories/test.json";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
 
   const stories: { name: string; story: StoryData }[] = Object.entries({
     "Lost Contact": LostContact,
-    // Test,
+    Test: import.meta.env.DEV ? Test : [],
     "The Listening Post": TheListeningPost,
   })
     .map(([name, story]) => {
@@ -18,6 +18,7 @@
         story,
       };
     })
+    .filter((story) => story.story.length > 0)
     .sort((a, b) => a.name.localeCompare(b.name));
   const context: StoryContext = setContext(
     "story",
@@ -28,7 +29,7 @@
 
   let storyComponent: Story;
   let storyState: "receive" | "send" | "end" = $state("receive");
-  let storyIndex = $state("1");
+  let storyIndex = $state("0");
   let selectedStory = $derived(stories[parseInt(storyIndex)]);
 
   function play(): void {

@@ -8,3 +8,4 @@ A little game about decoding Flag Semaphores
 - https://uxwing.com/chevron-direction-right-white-icon/
 - https://fonts.google.com/specimen/Roboto+Mono
 - https://getcssscan.com/css-box-shadow-examples
+- https://svgcrop.com/

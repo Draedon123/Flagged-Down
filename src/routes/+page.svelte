@@ -29,7 +29,7 @@
 
   let storyComponent: Story;
   let storyState: "receive" | "send" | "end" = $state("receive");
-  let storyIndex = $state("1");
+  let storyIndex = $state("0");
   let selectedStory = $derived(stories[parseInt(storyIndex)]);
 
   function play(): void {

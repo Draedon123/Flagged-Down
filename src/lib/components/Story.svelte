@@ -225,6 +225,8 @@
 </div>
 
 <style lang="scss">
+  @use "sass:color";
+
   .container {
     display: flex;
     flex-direction: column;
@@ -266,15 +268,15 @@
     color: white;
     background-color: $background-colour;
 
-    border: 1px solid mix($background-colour, #000, 90%);
+    border: 1px solid color.mix($background-colour, #000, 90%);
 
     transition:
       background-color 0.25s,
       border-color 0.25s;
 
     &:hover {
-      background-color: mix($background-colour, #000, 90%);
-      border-color: mix($background-colour, #000, 75%);
+      background-color: color.mix($background-colour, #000, 90%);
+      border-color: color.mix($background-colour, #000, 75%);
     }
   }
 

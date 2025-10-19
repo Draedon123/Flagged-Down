@@ -1,3 +1,5 @@
+![Banner](banner.png)
+
 # Flagged Down
 
 A little game about decoding Flag Semaphores
